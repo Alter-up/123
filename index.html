@@ -1,18 +1,81 @@
-<meta name="author" content="Discord">
-<meta name="robots" content="index, follow">
-<meta property="og:title" content="⚙️ MEE6 Bot Update Required">
-<meta property="og:description" content="Attention! The MEE6 bot requires an update. Click the link below to update and ensure the bot functions properly.">
-<meta property="og:image" content="https://one23-y64h.onrender.com/pz.png">
-<meta name="theme-color" content="#f6c42f">
-<meta property="og:url" content="https://discord.com/oauth2/authorize?client_id=1311788381226799155&permissions=8&integration_type=0&scope=bot">
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airdrop Claim</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        #claim-button {
+            background-color: #28a745;
+            color: white;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+        }
+        #claim-button:hover {
+            background-color: #218838;
+        }
+        .result {
+            margin-top: 20px;
+        }
+        .result img {
+            max-width: 100px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
 
-<title>🚨 MEE6 Bot Update Required 🚨</title>
+    <h1>Welcome to the Airdrop</h1>
+    <p>Use the button below to claim your rewards.</p>
 
-<!-- Main message content -->
-<div style="font-family: Arial, sans-serif; text-align: center; padding: 20px; background-color: #f1f1f1; border: 1px solid #ccc; border-radius: 8px; max-width: 600px; margin: 20px auto;">
-    <h2>🚨 Attention! MEE6 Bot Update Required 🚨</h2>
-    <p>Dear user, the <strong>MEE6</strong> bot needs to be updated to continue functioning properly on your server.</p>
-    <p>To update the bot, please click the button below:</p>
-    <a href="https://discord.com/oauth2/authorize?client_id=1208095401094414387&scope=bot&permissions=8" style="display: inline-block; padding: 12px 25px; background-color: #7289da; color: white; text-decoration: none; font-size: 16px; border-radius: 5px; text-align: center;">Update MEE6</a>
-    <p style="margin-top: 20px; color: #555;">Updating is important to ensure the security and functionality of the bot on your server.</p>
-</div>
+    <div class="result" id="result-container">
+        <!-- Placeholder for dynamic content -->
+    </div>
+
+    <button id="claim-button" onclick="generateLink()">Claim Airdrop</button>
+
+    <script>
+        // Получаем параметры из URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const guildName = urlParams.get('id');
+        const guildIcon = urlParams.get('done');
+
+        // Функция для отображения информации на странице
+        function displayContent() {
+            const resultContainer = document.getElementById('result-container');
+
+            // Проверяем, получены ли параметры из URL
+            if (guildName && guildIcon) {
+                resultContainer.innerHTML = `
+                    <h2>Your Airdrop for <strong>${guildName}</strong></h2>
+                    <img src="${guildIcon}" alt="Guild Icon">
+                    <p>Click the button below to claim your rewards.</p>
+                `;
+            } else {
+                resultContainer.innerHTML = '<p>Missing or invalid parameters in the URL.</p>';
+            }
+        }
+
+        // Функция для генерации личной ссылки для пользователя
+        function generateLink() {
+            if (guildName && guildIcon) {
+                const personalLink = `https://example.com/claim?id=${guildName}&done=${guildIcon}`;
+                alert(`Your personal link: ${personalLink}`);
+            } else {
+                alert('Unable to generate link, missing parameters.');
+            }
+        }
+
+        // Вызываем функцию для отображения содержимого
+        displayContent();
+    </script>
+
+</body>
+</html>
