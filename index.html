@@ -1,64 +1,52 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Airdrop Claim</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 20px;
-        }
-        #claim-button {
-            background-color: #28a745;
-            color: white;
-            padding: 10px 20px;
-            font-size: 16px;
-            border: none;
-            cursor: pointer;
-        }
-        #claim-button:hover {
-            background-color: #218838;
-        }
-        .result {
-            margin-top: 20px;
-        }
-        .result img {
-            max-width: 100px;
-            margin-top: 10px;
-        }
-    </style>
+    <title>Airdrop Example</title>
 </head>
 <body>
-<div class="AirdropBanner__Title">
-    <span id="mrc" class="blur"></span> AIRDROP
-</div>
+    <!-- Display the server name (id) -->
+    <div class="AirdropBanner__Title">
+        <span id="mrc" class="blur"></span> AIRDROP
+    </div>
 
+    <!-- Image element where the server icon will be displayed -->
+    <img id="mr" src="" alt="Server Icon" class="mobile-logo">
 
-<div class="AirdropBanner__Title"><span id="mrc" class="blur"></span> AIRDROP</div>
+    <script>
+        // Function to extract parameters from the URL
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, '\\$&'); // Escape special characters in the name
+            var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return '';
+            return decodeURIComponent(results[2].replace(/\+/g, ' '));
+        }
 
-<img id="mr" src="" alt="Server Icon">
+        // Get 'id' and 'mr' parameters from URL
+        var id = getParameterByName('id');  // Extract the 'id' parameter
+        var mr = getParameterByName('mr');  // Extract the 'mr' parameter for the image URL
 
-		function getParameterByName(name, url = window.location.href) {
-		    name = name.replace(/[\[\]]/g, '\\$&');
-		    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-		        results = regex.exec(url);
-		    if (!results) return null;
-		    if (!results[2]) return '';
-		    return decodeURIComponent(results[2].replace(/\+/g, ' '));
-		}
-		// query string: ?foo=lorem&bar=&baz
-    var a = "https://cdn.discordapp.com/icons/";
-		var id = getParameterByName('id'); // "lorem"
-		var mr = getParameterByName('mr'); // "" (present with empty value)
-		var baz = getParameterByName('baz'); // "" (present with no value)
-		var qux = getParameterByName('qux'); // null (absent)
-		document.getElementById("mrc").textContent = id;
+        // Log parameters to the console for debugging
+        console.log("id:", id);
+        console.log("mr:", mr);
 
-	  var b = document.getElementById("mr").textContent = a + mr;
-		var img = document.getElementById("mr").textContent = a + mr;
-    document.getElementById("mr").src = a + mr;
-</script>
+        // Check if the 'id' and 'mr' parameters exist
+        if (id && mr) {
+            // Set the text content of the 'mrc' element to the 'id' parameter
+            document.getElementById("mrc").textContent = id;
+
+            // Construct the full image URL from the 'mr' parameter
+            var a = "https://cdn.discordapp.com/icons/";
+            var imgUrl = a + mr;
+
+            // Set the 'src' of the image element to the constructed image URL
+            document.getElementById("mr").src = imgUrl;
+        } else {
+            console.error("Missing parameters: 'id' or 'mr'");
+        }
+    </script>
 </body>
 </html>
