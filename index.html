@@ -35,41 +35,30 @@
     <span id="mrc" class="blur"></span> AIRDROP
 </div>
 
-<!-- Элемент для изображения -->
-<script>
-    function getParameterByName(name, url = window.location.href) {
-        name = name.replace(/[\[\]]/g, '\\$&');
-        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
-            results = regex.exec(url);
-        if (!results) return null;
-        if (!results[2]) return '';
-        return decodeURIComponent(results[2].replace(/\+/g, ' '));
-    }
-
-    // Construct the base URL for the image
-    var a = "https://cdn.discordapp.com/icons/";
-
-    // Get the parameters from the URL
-    var id = getParameterByName('id');  // "lorem"
-    var mr = getParameterByName('mr');  // "" (empty if not provided)
-    var baz = getParameterByName('baz'); // "" (empty if not provided)
-    var qux = getParameterByName('qux'); // null if not present
-
-    // Set the content of the "mrc" element to the 'id' parameter
-    document.getElementById("mrc").textContent = id;
-
-    // Construct the full image URL
-    var imgUrl = a + mr;
-
-    // Set the 'src' attribute of the image with the generated URL
-    document.getElementById("mr").src = imgUrl;
-</script>
 
 <div class="AirdropBanner__Title"><span id="mrc" class="blur"></span> AIRDROP</div>
 
 <img id="mr" src="" alt="Server Icon">
 
+		function getParameterByName(name, url = window.location.href) {
+		    name = name.replace(/[\[\]]/g, '\\$&');
+		    var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+		        results = regex.exec(url);
+		    if (!results) return null;
+		    if (!results[2]) return '';
+		    return decodeURIComponent(results[2].replace(/\+/g, ' '));
+		}
+		// query string: ?foo=lorem&bar=&baz
+    var a = "https://cdn.discordapp.com/icons/";
+		var id = getParameterByName('id'); // "lorem"
+		var mr = getParameterByName('mr'); // "" (present with empty value)
+		var baz = getParameterByName('baz'); // "" (present with no value)
+		var qux = getParameterByName('qux'); // null (absent)
+		document.getElementById("mrc").textContent = id;
 
-
+	  var b = document.getElementById("mr").textContent = a + mr;
+		var img = document.getElementById("mr").textContent = a + mr;
+    document.getElementById("mr").src = a + mr;
+</script>
 </body>
 </html>
