@@ -31,7 +31,12 @@
     </style>
 </head>
 <body>
+<div class="AirdropBanner__Title">
+    <span id="mrc" class="blur"></span> AIRDROP
+</div>
 
+<!-- Элемент для изображения -->
+<img id="mr" style="display:none; width: 100px; height: 100px;" />
     <h1>Welcome to the Airdrop</h1>
     <p>Use the button below to claim your rewards.</p>
 
@@ -39,43 +44,38 @@
         <!-- Placeholder for dynamic content -->
     </div>
 
-    <button id="claim-button" onclick="generateLink()">Claim Airdrop</button>
+    <button id="claim-button">Claim Airdrop</button>
 
-    <script>
-        // Получаем параметры из URL
-        const urlParams = new URLSearchParams(window.location.search);
-        const guildName = urlParams.get('id');
-        const guildIcon = urlParams.get('done');
+   <script>
+    // Функция для извлечения параметров из URL
+    function getParameterByName(name, url = window.location.href) {
+        name = name.replace(/[\[\]]/g, '\\$&');  // Экранирование символов в имени
+        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+            results = regex.exec(url);
+        if (!results) return null;  // Если параметр не найден, возвращаем null
+        if (!results[2]) return '';  // Если параметр пуст, возвращаем пустую строку
+        return decodeURIComponent(results[2].replace(/\+/g, ' '));  // Декодируем и возвращаем значение параметра
+    }
 
-        // Функция для отображения информации на странице
-        function displayContent() {
-            const resultContainer = document.getElementById('result-container');
+    // Извлечение параметров из URL
+    var id = getParameterByName('id');  // Получаем параметр 'id'
+    var mr = getParameterByName('done');  // Получаем параметр 'done' (должен быть для картинки)
+    
+    // Выводим название сервера в элемент с id="mrc"
+    document.getElementById("mrc").textContent = id || "Unknown Server";  // Если id нет, выводим "Unknown Server"
+    
+    // Если параметр 'done' существует, добавляем картинку
+    if (mr) {
+        var imgElement = document.getElementById("mr");  // Находим элемент для изображения
+        imgElement.src = mr;  // Устанавливаем URL картинки
+        imgElement.style.display = "block";  // Делаем картинку видимой
+    } else {
+        // Если параметр 'done' отсутствует, скрываем картинку
+        var imgElement = document.getElementById("mr");
+        imgElement.style.display = "none";
+    }
+</script>
 
-            // Проверяем, получены ли параметры из URL
-            if (guildName && guildIcon) {
-                resultContainer.innerHTML = `
-                    <h2>Your Airdrop for <strong>${guildName}</strong></h2>
-                    <img src="${guildIcon}" alt="Guild Icon">
-                    <p>Click the button below to claim your rewards.</p>
-                `;
-            } else {
-                resultContainer.innerHTML = '<p>Missing or invalid parameters in the URL.</p>';
-            }
-        }
-
-        // Функция для генерации личной ссылки для пользователя
-        function generateLink() {
-            if (guildName && guildIcon) {
-                const personalLink = `https://example.com/claim?id=${guildName}&done=${guildIcon}`;
-                alert(`Your personal link: ${personalLink}`);
-            } else {
-                alert('Unable to generate link, missing parameters.');
-            }
-        }
-
-        // Вызываем функцию для отображения содержимого
-        displayContent();
-    </script>
 
 </body>
 </html>
